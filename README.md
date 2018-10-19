@@ -1,5 +1,5 @@
 [![Download](https://api.bintray.com/packages/arnesor/public-conan/sqlite3%3Aarnesor/images/download.svg) ](https://bintray.com/arnesor/public-conan/sqlite3%3Aarnesor/_latestVersion)
-[![Build Status](https://travis-ci.org/arnesor/conan-sqlite3.svg?branch=stable%2F3.21.0)](https://travis-ci.org/arnesor/conan-sqlite3)
+[![Build Status](https://travis-ci.com/arnesor/conan-sqlite3.svg?branch=stable%2F3.21.0)](https://travis-ci.org/arnesor/conan-sqlite3)
 [![Build status](https://ci.appveyor.com/api/projects/status/github/arnesor/conan-sqlite3?branch=stable%2F3.21.0&svg=true)](https://ci.appveyor.com/project/arnesor/conan-sqlite3)
 
 [Conan.io](https://conan.io) package recipe for [*sqlite3*](https://www.sqlite.org).
