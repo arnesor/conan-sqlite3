@@ -18,8 +18,35 @@ class ConanSqlite3(ConanFile):
     settings = "os", "compiler", "arch", "build_type"
     exports = ["LICENSE.md"]
     exports_sources = ["CMakeLists.txt", "FindSQLite3.cmake"]
-    options = {"shared": [True, False], "enable_json1": [True, False], "fPIC": [True, False]}
-    default_options = "shared=False", "enable_json1=False", "fPIC=True"
+    options = {"shared": [True, False],
+               "fPIC": [True, False],
+               "threadsafe": [0, 1, 2],
+               "enable_column_metadata": [True, False],
+               "enable_explain_comments": [True, False],
+               "enable_fts3": [True, False],
+               "enable_json1": [True, False],
+               "enable_rtree": [True, False],
+               "have_fdatasync": [True, False],
+               "have_gmtime_r": [True, False],
+               "have_localtime_r": [True, False],
+               "have_posix_fallocate": [True, False],
+               "have_strerror_r": [True, False],
+               "have_usleep": [True, False]
+               }
+    default_options = "shared=False",\
+                      "fPIC=True",\
+                      "threadsafe=1",\
+                      "enable_column_metadata=False",\
+                      "enable_explain_comments=False",\
+                      "enable_fts3=False",\
+                      "enable_json1=False",\
+                      "enable_rtree=False",\
+                      "have_fdatasync=True",\
+                      "have_gmtime_r=True",\
+                      "have_localtime_r=True",\
+                      "have_posix_fallocate=True",\
+                      "have_strerror_r=True",\
+                      "have_usleep=True"
 
     def source(self):
         base_url = "https://www.sqlite.org/" + self.year
@@ -39,7 +66,19 @@ class ConanSqlite3(ConanFile):
 
     def build(self):
         cmake = CMake(self)
+        cmake.definitions["THREADSAFE"] = self.options.threadsafe
+        cmake.definitions["ENABLE_COLUMN_METADATA"] = self.options.enable_column_metadata
+        cmake.definitions["ENABLE_EXPLAIN_COMMENTS"] = self.options.enable_explain_comments
+        cmake.definitions["ENABLE_FTS3"] = self.options.enable_fts3
         cmake.definitions["ENABLE_JSON1"] = self.options.enable_json1
+        cmake.definitions["ENABLE_RTREE"] = self.options.enable_rtree
+        cmake.definitions["HAVE_FDATASYNC"] = self.options.have_fdatasync
+        cmake.definitions["HAVE_GMTIME_R"] = self.options.have_gmtime_r
+        cmake.definitions["HAVE_LOCALTIME_R"] = self.options.have_localtime_r
+        cmake.definitions["HAVE_POSIX_FALLOCATE"] = self.options.have_posix_fallocate
+        cmake.definitions["HAVE_STRERROR_R"] = self.options.have_strerror_r
+        cmake.definitions["HAVE_USLEEP"] = self.options.have_usleep
+
         if self.settings.os != "Windows":
             cmake.definitions["CMAKE_POSITION_INDEPENDENT_CODE"] = self.options.fPIC
         cmake.configure()
