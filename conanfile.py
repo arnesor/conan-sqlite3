@@ -3,6 +3,7 @@
 
 from conans import ConanFile, CMake, tools
 import os
+import platform
 
 
 class ConanSqlite3(ConanFile):
@@ -25,13 +26,7 @@ class ConanSqlite3(ConanFile):
                "enable_explain_comments": [True, False],
                "enable_fts3": [True, False],
                "enable_json1": [True, False],
-               "enable_rtree": [True, False],
-               "have_fdatasync": [True, False],
-               "have_gmtime_r": [True, False],
-               "have_localtime_r": [True, False],
-               "have_posix_fallocate": [True, False],
-               "have_strerror_r": [True, False],
-               "have_usleep": [True, False]
+               "enable_rtree": [True, False]
                }
     default_options = "shared=False",\
                       "fPIC=True",\
@@ -40,13 +35,7 @@ class ConanSqlite3(ConanFile):
                       "enable_explain_comments=False",\
                       "enable_fts3=False",\
                       "enable_json1=False",\
-                      "enable_rtree=False",\
-                      "have_fdatasync=True",\
-                      "have_gmtime_r=True",\
-                      "have_localtime_r=True",\
-                      "have_posix_fallocate=True",\
-                      "have_strerror_r=True",\
-                      "have_usleep=True"
+                      "enable_rtree=False"
 
     def source(self):
         base_url = "https://www.sqlite.org/" + self.year
@@ -72,12 +61,13 @@ class ConanSqlite3(ConanFile):
         cmake.definitions["ENABLE_FTS3"] = self.options.enable_fts3
         cmake.definitions["ENABLE_JSON1"] = self.options.enable_json1
         cmake.definitions["ENABLE_RTREE"] = self.options.enable_rtree
-        cmake.definitions["HAVE_FDATASYNC"] = self.options.have_fdatasync
-        cmake.definitions["HAVE_GMTIME_R"] = self.options.have_gmtime_r
-        cmake.definitions["HAVE_LOCALTIME_R"] = self.options.have_localtime_r
-        cmake.definitions["HAVE_POSIX_FALLOCATE"] = self.options.have_posix_fallocate
-        cmake.definitions["HAVE_STRERROR_R"] = self.options.have_strerror_r
-        cmake.definitions["HAVE_USLEEP"] = self.options.have_usleep
+        if platform.system() in ["Linux"]:
+            cmake.definitions["HAVE_FDATASYNC"] = True
+            cmake.definitions["HAVE_GMTIME_R"] = True
+            cmake.definitions["HAVE_LOCALTIME_R"] = True
+            cmake.definitions["HAVE_POSIX_FALLOCATE"] = True
+            cmake.definitions["HAVE_STRERROR_R"] = True
+            cmake.definitions["HAVE_USLEEP"] = True
 
         if self.settings.os != "Windows":
             cmake.definitions["CMAKE_POSITION_INDEPENDENT_CODE"] = self.options.fPIC
