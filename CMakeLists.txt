@@ -37,9 +37,24 @@ if(ENABLE_FTS3)
     target_compile_definitions(sqlite3 PRIVATE SQLITE_ENABLE_FTS3)
 endif()
 
+option(ENABLE_FTS4 "Enable version 3 and 4 of the full-text search engine")
+if(ENABLE_FTS4)
+    target_compile_definitions(sqlite3 PRIVATE SQLITE_ENABLE_FTS4)
+endif()
+
+option(ENABLE_FTS5 "Enable version 5 of the full-text search engine")
+if(ENABLE_FTS5)
+    target_compile_definitions(sqlite3 PRIVATE SQLITE_ENABLE_FTS5)
+endif()
+
 option(ENABLE_RTREE "Enable support for the R*Tree index extension")
 if(ENABLE_RTREE)
     target_compile_definitions(sqlite3 PRIVATE SQLITE_ENABLE_RTREE)
+endif()
+
+option(OMIT_LOAD_EXTENSION "Omits the entire extension loading mechanism from SQLite")
+if(OMIT_LOAD_EXTENSION)
+    target_compile_definitions(sqlite3 PRIVATE SQLITE_OMIT_LOAD_EXTENSION)
 endif()
 
 option(HAVE_FDATASYNC "Use fdatasync() instead of fsync() on unix systems")

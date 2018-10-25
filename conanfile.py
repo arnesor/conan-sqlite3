@@ -3,7 +3,6 @@
 
 from conans import ConanFile, CMake, tools
 import os
-import platform
 
 
 class ConanSqlite3(ConanFile):
@@ -25,8 +24,11 @@ class ConanSqlite3(ConanFile):
                "enable_column_metadata": [True, False],
                "enable_explain_comments": [True, False],
                "enable_fts3": [True, False],
+               "enable_fts4": [True, False],
+               "enable_fts5": [True, False],
                "enable_json1": [True, False],
-               "enable_rtree": [True, False]
+               "enable_rtree": [True, False],
+               "omit_load_extension": [True, False]
                }
     default_options = "shared=False",\
                       "fPIC=True",\
@@ -34,12 +36,16 @@ class ConanSqlite3(ConanFile):
                       "enable_column_metadata=False",\
                       "enable_explain_comments=False",\
                       "enable_fts3=False",\
+                      "enable_fts4=False",\
+                      "enable_fts5=False",\
                       "enable_json1=False",\
-                      "enable_rtree=False"
+                      "enable_rtree=False",\
+                      "omit_load_extension=False"
 
     def source(self):
         base_url = "https://www.sqlite.org/" + self.year
-        archive_name = "sqlite-amalgamation-" + self.version.replace(".","") + "000"
+        major, minor, patch = self.version.split(".")
+        archive_name = "sqlite-amalgamation-" + major + minor.rjust(2, "0") + patch.rjust(2, "0") + "00"
         archive_ext = "zip"
         download_url = "{0}/{1}.{2}".format(base_url, archive_name, archive_ext)
         self.output.info("Attempting download of sources from: " + download_url)
@@ -59,15 +65,22 @@ class ConanSqlite3(ConanFile):
         cmake.definitions["ENABLE_COLUMN_METADATA"] = self.options.enable_column_metadata
         cmake.definitions["ENABLE_EXPLAIN_COMMENTS"] = self.options.enable_explain_comments
         cmake.definitions["ENABLE_FTS3"] = self.options.enable_fts3
+        cmake.definitions["ENABLE_FTS4"] = self.options.enable_fts4
+        cmake.definitions["ENABLE_FTS5"] = self.options.enable_fts5
         cmake.definitions["ENABLE_JSON1"] = self.options.enable_json1
         cmake.definitions["ENABLE_RTREE"] = self.options.enable_rtree
-        if platform.system() in ["Linux"]:
-            cmake.definitions["HAVE_FDATASYNC"] = True
-            cmake.definitions["HAVE_GMTIME_R"] = True
-            cmake.definitions["HAVE_LOCALTIME_R"] = True
-            cmake.definitions["HAVE_POSIX_FALLOCATE"] = True
-            cmake.definitions["HAVE_STRERROR_R"] = True
-            cmake.definitions["HAVE_USLEEP"] = True
+        cmake.definitions["OMIT_LOAD_EXTENSION"] = self.options.omit_load_extension
+        cmake.definitions["HAVE_FDATASYNC"] = True
+        cmake.definitions["HAVE_GMTIME_R"] = True
+        cmake.definitions["HAVE_LOCALTIME_R"] = True
+        cmake.definitions["HAVE_POSIX_FALLOCATE"] = True
+        cmake.definitions["HAVE_STRERROR_R"] = True
+        cmake.definitions["HAVE_USLEEP"] = True
+        if self.settings.os == "Windows":
+            cmake.definitions["HAVE_LOCALTIME_R"] = False
+            cmake.definitions["HAVE_POSIX_FALLOCATE"] = False
+        if self.settings.os == "Macos":
+            cmake.definitions["HAVE_POSIX_FALLOCATE"] = False
 
         if self.settings.os != "Windows":
             cmake.definitions["CMAKE_POSITION_INDEPENDENT_CODE"] = self.options.fPIC
@@ -87,5 +100,7 @@ class ConanSqlite3(ConanFile):
     def package_info(self):
         self.cpp_info.libs = ['sqlite3']
         if self.settings.os == "Linux":
-            self.cpp_info.libs.append("pthread")
-            self.cpp_info.libs.append("dl")
+            if self.options.threadsafe != "0":
+                self.cpp_info.libs.append("pthread")
+            if self.options.omit_load_extension == "False":
+                self.cpp_info.libs.append("dl")

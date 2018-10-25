@@ -52,8 +52,11 @@ See https://www.sqlite.org/compile.html for details.
 | enable_column_metadata      | False |  [True, False] |
 | enable_explain_comments      | False |  [True, False] |
 | enable_fts3      | False |  [True, False] |
+| enable_fts4      | False |  [True, False] |
+| enable_fts5      | False |  [True, False] |
 | enable_json1      | False |  [True, False] |
 | enable_rtree      | False |  [True, False] |
+| omit_load_extension      | False |  [True, False] |
 
 ## Add Remote
 
