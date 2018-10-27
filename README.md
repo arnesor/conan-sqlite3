@@ -1,6 +1,6 @@
 [![Download](https://api.bintray.com/packages/arnesor/public-conan/sqlite3%3Aarnesor/images/download.svg) ](https://bintray.com/arnesor/public-conan/sqlite3%3Aarnesor/_latestVersion)
-[![Build Status](https://travis-ci.com/arnesor/conan-sqlite3.svg?branch=stable%2F3.21.0)](https://travis-ci.org/arnesor/conan-sqlite3)
-[![Build status](https://ci.appveyor.com/api/projects/status/github/arnesor/conan-sqlite3?branch=stable%2F3.21.0&svg=true)](https://ci.appveyor.com/project/arnesor/conan-sqlite3)
+[![Build Status](https://travis-ci.com/arnesor/conan-sqlite3.svg?branch=stable%2F3.20.1)](https://travis-ci.com/arnesor/conan-sqlite3)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/arnesor/conan-sqlite3?branch=stable%2F3.20.1&svg=true)](https://ci.appveyor.com/project/arnesor/conan-sqlite3)
 
 [Conan.io](https://conan.io) package recipe for [*sqlite3*](https://www.sqlite.org).
 
@@ -12,14 +12,14 @@ The packages generated with this **conanfile** can be found on [Bintray](https:/
 
 ### Basic setup
 
-    $ conan install sqlite3/3.21.0@arnesor/stable
+    $ conan install sqlite3/3.20.1@arnesor/stable
 
 ### Project setup
 
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
 
     [requires]
-    sqlite3/3.21.0@arnesor/stable
+    sqlite3/3.20.1@arnesor/stable
 
     [generators]
     cmake
@@ -64,7 +64,7 @@ See https://www.sqlite.org/compile.html for details.
 
 ## Upload
 
-    $ conan upload sqlite3/3.21.0@arnesor/stable --all -r arnesor
+    $ conan upload sqlite3/3.20.1@arnesor/stable --all -r arnesor
 
 
 ## Conan Recipe License
@@ -72,4 +72,4 @@ See https://www.sqlite.org/compile.html for details.
 NOTE: The conan recipe license applies only to the files of this recipe, which can be used to build and package sqlite3.
 It does *not* in any way apply or is related to the actual software being packaged.
 
-[MIT](https://github.com/arnesor/conan-sqlite3.git/blob/stable/3.21.0/LICENSE)
+[MIT](https://github.com/arnesor/conan-sqlite3.git/blob/stable/3.20.1/LICENSE)

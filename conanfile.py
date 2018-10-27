@@ -7,9 +7,9 @@ import os
 
 class ConanSqlite3(ConanFile):
     name = "sqlite3"
-    version = "3.21.0"
+    version = "3.20.1"
     year = "2017"
-    sha1 = "ebe33c20d37a715db95288010c1009cd560f2452"
+    sha1 = "e9dc46fc55a512b5d2ef97fd548b7ab4beb2d3e3"
     description = "Self-contained, serverless, in-process SQL database engine."
     url = "http://github.com/bincrafters/conan-sqlite3"
     homepage = "https://www.sqlite.org"
