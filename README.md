@@ -12,14 +12,14 @@ The packages generated with this **conanfile** can be found on [Bintray](https:/
 
 ### Basic setup
 
-    $ conan install sqlite3/3.21.0@arnesor/stable
+    $ conan install sqlite3/3.14.1@arnesor/stable
 
 ### Project setup
 
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
 
     [requires]
-    sqlite3/3.21.0@arnesor/stable
+    sqlite3/3.14.1@arnesor/stable
 
     [generators]
     cmake
@@ -64,7 +64,7 @@ See https://www.sqlite.org/compile.html for details.
 
 ## Upload
 
-    $ conan upload sqlite3/3.21.0@arnesor/stable --all -r arnesor
+    $ conan upload sqlite3/3.14.1@arnesor/stable --all -r arnesor
 
 
 ## Conan Recipe License
@@ -72,4 +72,4 @@ See https://www.sqlite.org/compile.html for details.
 NOTE: The conan recipe license applies only to the files of this recipe, which can be used to build and package sqlite3.
 It does *not* in any way apply or is related to the actual software being packaged.
 
-[MIT](https://github.com/arnesor/conan-sqlite3.git/blob/stable/3.21.0/LICENSE)
+[MIT](https://github.com/arnesor/conan-sqlite3.git/blob/stable/3.14.1/LICENSE)
